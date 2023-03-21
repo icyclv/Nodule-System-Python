@@ -1,0 +1,20 @@
+server:
+  url: http://localhost:8082
+pdfReport:
+  title: "xxxx医院"
+  subTitle: "智能分析系统检测报告"
+  info:
+    "姓名": ""
+    "性别": ""
+    "年龄": ""
+    "科室": ""
+    "检查时间": ""
+    "床号": ""
+    "住院号": ""
+    "检验号": ""
+  showInfo: true
+  showTable: true
+  showImage: true
+  showAppearance: true
+  showDiagnosis: true
+  showFooter: true

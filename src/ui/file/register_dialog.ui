@@ -1,0 +1,727 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>525</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>525</width>
+    <height>700</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>注册</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>Images/Icon.ico</normaloff>Images/Icon.ico</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">color: rgb(200, 200, 200);
+background-color: rgb(10, 10, 10);</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QWidget" name="widget" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout_5">
+      <item>
+       <widget class="QFrame" name="frame_3">
+        <property name="styleSheet">
+         <string notr="true">border-radius: 10px;</string>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QFrame" name="login_area_2">
+           <property name="maximumSize">
+            <size>
+             <width>500</width>
+             <height>600</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border-radius: 10px;</string>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::NoFrame</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <item>
+               <layout class="QFormLayout" name="formLayout_2">
+                <property name="verticalSpacing">
+                 <number>30</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_10">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>33</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>宋体</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>用户名</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                  <property name="margin">
+                   <number>0</number>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLineEdit" name="usernameEdit">
+                  <property name="font">
+                   <font>
+                    <family>Segoe UI</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLineEdit {
+	border: 2px solid rgb(45, 45, 45);
+	border-radius: 5px;
+	padding: 5px;
+	background-color: rgb(30, 30, 30);	
+	color: rgb(100, 100, 100);
+}
+QLineEdit:hover {
+	border: 2px solid rgb(55, 55, 55);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(170, 255, 255);	
+	color: rgb(200, 200, 200);
+}</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="maxLength">
+                   <number>32</number>
+                  </property>
+                  <property name="placeholderText">
+                   <string>用户名</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_11">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>33</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>宋体</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>密码</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLineEdit" name="passwordEidt">
+                  <property name="font">
+                   <font>
+                    <family>Segoe UI</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLineEdit {
+	border: 2px solid rgb(45, 45, 45);
+	border-radius: 5px;
+	padding: 5px;
+	background-color: rgb(30, 30, 30);	
+	color: rgb(100, 100, 100);
+}
+QLineEdit:hover {
+	border: 2px solid rgb(55, 55, 55);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(170, 255, 255);	
+	color: rgb(200, 200, 200);
+}</string>
+                  </property>
+                  <property name="maxLength">
+                   <number>16</number>
+                  </property>
+                  <property name="echoMode">
+                   <enum>QLineEdit::Password</enum>
+                  </property>
+                  <property name="placeholderText">
+                   <string>密码</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="0">
+                 <widget class="QLabel" name="label_12">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>33</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>宋体</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>性别</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="0">
+                 <widget class="QLabel" name="label_13">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>33</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>宋体</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>生日</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="4" column="1">
+                 <widget class="QDateEdit" name="birthdayEdit">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>33</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLineEdit {
+	border: 2px solid rgb(45, 45, 45);
+	border-radius: 5px;
+	padding: 5px;
+	background-color: rgb(30, 30, 30);	
+	color: rgb(100, 100, 100);
+}
+QLineEdit:hover {
+	border: 2px solid rgb(55, 55, 55);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(170, 255, 255);	
+	color: rgb(200, 200, 200);
+}</string>
+                  </property>
+                  <property name="calendarPopup">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="0">
+                 <widget class="QLabel" name="label_14">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>33</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>宋体</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>电话</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="5" column="1">
+                 <widget class="QLineEdit" name="phoneEdit">
+                  <property name="font">
+                   <font>
+                    <family>Segoe UI</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLineEdit {
+	border: 2px solid rgb(45, 45, 45);
+	border-radius: 5px;
+	padding: 5px;
+	background-color: rgb(30, 30, 30);	
+	color: rgb(100, 100, 100);
+}
+QLineEdit:hover {
+	border: 2px solid rgb(55, 55, 55);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(170, 255, 255);	
+	color: rgb(200, 200, 200);
+}</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="maxLength">
+                   <number>32</number>
+                  </property>
+                  <property name="placeholderText">
+                   <string>电话</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="0">
+                 <widget class="QLabel" name="label_15">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>33</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>宋体</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>邮箱</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="6" column="1">
+                 <widget class="QLineEdit" name="mailEdit">
+                  <property name="font">
+                   <font>
+                    <family>Segoe UI</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLineEdit {
+	border: 2px solid rgb(45, 45, 45);
+	border-radius: 5px;
+	padding: 5px;
+	background-color: rgb(30, 30, 30);	
+	color: rgb(100, 100, 100);
+}
+QLineEdit:hover {
+	border: 2px solid rgb(55, 55, 55);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(170, 255, 255);	
+	color: rgb(200, 200, 200);
+}</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="maxLength">
+                   <number>32</number>
+                  </property>
+                  <property name="placeholderText">
+                   <string>邮箱</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="3" column="1">
+                 <widget class="QFrame" name="frame_4">
+                  <property name="styleSheet">
+                   <string notr="true">QFrame {
+	border: 2px solid rgb(45, 45, 45);
+	border-radius: 5px;
+	background-color: rgb(30, 30, 30);	
+	color: rgb(100, 100, 100);
+}
+</string>
+                  </property>
+                  <property name="frameShape">
+                   <enum>QFrame::Box</enum>
+                  </property>
+                  <property name="frameShadow">
+                   <enum>QFrame::Plain</enum>
+                  </property>
+                  <property name="lineWidth">
+                   <number>5</number>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_7">
+                   <item>
+                    <layout class="QHBoxLayout" name="horizontalLayout_8">
+                     <item>
+                      <widget class="QRadioButton" name="MaleButton">
+                       <property name="styleSheet">
+                        <string notr="true">QRadioButton {
+	background-color: rgb(30, 30, 30);	
+	color: rgb(100, 100, 100);
+}
+</string>
+                       </property>
+                       <property name="text">
+                        <string>男性</string>
+                       </property>
+                       <property name="checkable">
+                        <bool>true</bool>
+                       </property>
+                       <property name="checked">
+                        <bool>true</bool>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QRadioButton" name="FemaleButton">
+                       <property name="styleSheet">
+                        <string notr="true">QRadioButton {
+	background-color: rgb(30, 30, 30);	
+	color: rgb(100, 100, 100);
+}
+r</string>
+                       </property>
+                       <property name="text">
+                        <string>女性</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item row="7" column="0">
+                 <widget class="QLabel" name="label_16">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>33</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>宋体</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>机构</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="7" column="1">
+                 <widget class="QLineEdit" name="departmentEdit">
+                  <property name="font">
+                   <font>
+                    <family>Segoe UI</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLineEdit {
+	border: 2px solid rgb(45, 45, 45);
+	border-radius: 5px;
+	padding: 5px;
+	background-color: rgb(30, 30, 30);	
+	color: rgb(100, 100, 100);
+}
+QLineEdit:hover {
+	border: 2px solid rgb(55, 55, 55);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(170, 255, 255);	
+	color: rgb(200, 200, 200);
+}</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="maxLength">
+                   <number>32</number>
+                  </property>
+                  <property name="placeholderText">
+                   <string>机构</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_17">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>33</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>宋体</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>姓名</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLineEdit" name="nameEdit">
+                  <property name="font">
+                   <font>
+                    <family>Segoe UI</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLineEdit {
+	border: 2px solid rgb(45, 45, 45);
+	border-radius: 5px;
+	padding: 5px;
+	background-color: rgb(30, 30, 30);	
+	color: rgb(100, 100, 100);
+}
+QLineEdit:hover {
+	border: 2px solid rgb(55, 55, 55);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(170, 255, 255);	
+	color: rgb(200, 200, 200);
+}</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="maxLength">
+                   <number>32</number>
+                  </property>
+                  <property name="placeholderText">
+                   <string>姓名</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="8" column="0">
+                 <widget class="QLabel" name="label_18">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>33</height>
+                   </size>
+                  </property>
+                  <property name="font">
+                   <font>
+                    <family>宋体</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>职称</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item row="8" column="1">
+                 <widget class="QLineEdit" name="positionEdit">
+                  <property name="font">
+                   <font>
+                    <family>Segoe UI</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QLineEdit {
+	border: 2px solid rgb(45, 45, 45);
+	border-radius: 5px;
+	padding: 5px;
+	background-color: rgb(30, 30, 30);	
+	color: rgb(100, 100, 100);
+}
+QLineEdit:hover {
+	border: 2px solid rgb(55, 55, 55);
+}
+QLineEdit:focus {
+	border: 2px solid rgb(170, 255, 255);	
+	color: rgb(200, 200, 200);
+}</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="maxLength">
+                   <number>32</number>
+                  </property>
+                  <property name="placeholderText">
+                   <string>职称</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QPushButton" name="registerButton">
+                <property name="font">
+                 <font>
+                  <family>宋体</family>
+                  <pointsize>14</pointsize>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton {	
+	background-color: rgb(50, 50, 50);
+	border: 2px solid rgb(60, 60, 60);
+	border-radius: 5px;
+}
+QPushButton:hover {	
+	background-color: rgb(60, 60, 60);
+	border: 2px solid rgb(70, 70, 70);
+}
+QPushButton:pressed {	
+	background-color: rgb(170, 255, 255);
+	border: 2px solid rgb(255, 165, 24);	
+	color: rgb(35, 35, 35);
+}</string>
+                </property>
+                <property name="text">
+                 <string>注册</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>usernameEdit</tabstop>
+  <tabstop>passwordEidt</tabstop>
+  <tabstop>nameEdit</tabstop>
+  <tabstop>MaleButton</tabstop>
+  <tabstop>FemaleButton</tabstop>
+  <tabstop>birthdayEdit</tabstop>
+  <tabstop>phoneEdit</tabstop>
+  <tabstop>mailEdit</tabstop>
+  <tabstop>departmentEdit</tabstop>
+  <tabstop>positionEdit</tabstop>
+  <tabstop>registerButton</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

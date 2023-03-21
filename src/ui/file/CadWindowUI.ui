@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1000</width>
+    <height>536</height>
+   </rect>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::NoFocus</enum>
+  </property>
+  <property name="windowTitle">
+   <string>肺结节智能分析系统</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="contextMenuPolicy">
+    <enum>Qt::CustomContextMenu</enum>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="3">
+     <widget class="QPushButton" name="loadDicomButton">
+      <property name="text">
+       <string>添加影像</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QWidget" name="widget" native="true"/>
+    </item>
+    <item row="1" column="0" colspan="5">
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <widget class="QTreeWidget" name="treeWidget">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="showDropIndicator" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="autoExpandDelay">
+        <number>-1</number>
+       </property>
+       <property name="indentation">
+        <number>20</number>
+       </property>
+       <property name="rootIsDecorated">
+        <bool>false</bool>
+       </property>
+       <property name="uniformRowHeights">
+        <bool>true</bool>
+       </property>
+       <property name="itemsExpandable">
+        <bool>true</bool>
+       </property>
+       <property name="sortingEnabled">
+        <bool>false</bool>
+       </property>
+       <property name="animated">
+        <bool>true</bool>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+       <property name="headerHidden">
+        <bool>false</bool>
+       </property>
+       <property name="expandsOnDoubleClick">
+        <bool>true</bool>
+       </property>
+       <attribute name="headerVisible">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="headerCascadingSectionResizes">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="headerMinimumSectionSize">
+        <number>50</number>
+       </attribute>
+       <attribute name="headerDefaultSectionSize">
+        <number>100</number>
+       </attribute>
+       <attribute name="headerShowSortIndicator" stdset="0">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="headerStretchLastSection">
+        <bool>true</bool>
+       </attribute>
+       <column>
+        <property name="text">
+         <string>姓名</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>性别</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>生日</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>联系电话</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>备注信息</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>操作</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
+       </column>
+      </widget>
+      <widget class="QTreeWidget" name="noduletreeWidget">
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
+       </property>
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
+       <property name="showDropIndicator" stdset="0">
+        <bool>true</bool>
+       </property>
+       <property name="autoExpandDelay">
+        <number>-1</number>
+       </property>
+       <property name="indentation">
+        <number>20</number>
+       </property>
+       <property name="rootIsDecorated">
+        <bool>true</bool>
+       </property>
+       <property name="uniformRowHeights">
+        <bool>true</bool>
+       </property>
+       <property name="itemsExpandable">
+        <bool>true</bool>
+       </property>
+       <property name="sortingEnabled">
+        <bool>false</bool>
+       </property>
+       <property name="animated">
+        <bool>true</bool>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+       <attribute name="headerVisible">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="headerCascadingSectionResizes">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="headerMinimumSectionSize">
+        <number>50</number>
+       </attribute>
+       <attribute name="headerDefaultSectionSize">
+        <number>120</number>
+       </attribute>
+       <attribute name="headerShowSortIndicator" stdset="0">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="headerStretchLastSection">
+        <bool>true</bool>
+       </attribute>
+       <column>
+        <property name="text">
+         <string>状态</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>检测时间</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>检测年龄</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>概率</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>直径</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>类别</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>恶性概率</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>信息</string>
+        </property>
+        <property name="textAlignment">
+         <set>AlignCenter</set>
+        </property>
+       </column>
+      </widget>
+     </widget>
+    </item>
+    <item row="0" column="4">
+     <widget class="QPushButton" name="displayButton">
+      <property name="focusPolicy">
+       <enum>Qt::NoFocus</enum>
+      </property>
+      <property name="text">
+       <string>查看</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="2">
+     <widget class="QPushButton" name="addUserButton">
+      <property name="text">
+       <string>添加患者</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1000</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::NoFocus</enum>
+   </property>
+   <widget class="QMenu" name="menuNodule_CADx">
+    <property name="title">
+     <string>菜单</string>
+    </property>
+   </widget>
+   <addaction name="menuNodule_CADx"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionPreferences">
+   <property name="text">
+    <string>Preferences</string>
+   </property>
+  </action>
+  <action name="action22213123">
+   <property name="text">
+    <string>File</string>
+   </property>
+  </action>
+  <action name="addUserAction">
+   <property name="text">
+    <string>添加患者</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
