@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'E:\a_bishe\code\Nodule-System-Python\src\ui\file\peport_info.ui'
+# Form implementation generated from reading ui file 'E:\a_bishe\code\Nodule-System-Python\client\ui\file\peport_info.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #

@@ -262,8 +262,8 @@ class FooterCanvas(canvas.Canvas):
 
 if __name__ == '__main__':
     # 创建内容对应的空列表
-    cur_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../src/resources/simsun.ttc")
-    pdfmetrics.registerFont(TTFont('SimSun', "../src/resources/simsun.ttc"))
+    cur_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../client/resources/simsun.ttc")
+    pdfmetrics.registerFont(TTFont('SimSun', "../client/resources/simsun.ttc"))
     content = list()
     title = 'xxx医院'
     subTitle = 'AI智能分析系统报告'

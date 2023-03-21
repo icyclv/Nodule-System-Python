@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'E:\a_bishe\code\Nodule-System-Python\src\ui\file\add_patient.ui'
+# Form implementation generated from reading ui file 'E:\a_bishe\code\Nodule-System-Python\client\ui\file\add_patient.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #

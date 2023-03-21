@@ -189,7 +189,7 @@ if __name__ == '__main__':
     subTitle = 'AI智能分析系统报告'
 
     doc = SimpleDocTemplate('report.pdf', pagesize=A4, topMargin=10)
-    cur_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../src/resources/simsun.ttc")
+    cur_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "../client/resources/simsun.ttc")
     pdfmetrics.registerFont(TTFont('SimSun',cur_path ))
     # 添加标题
     content.append(Graphs.draw_title(title))

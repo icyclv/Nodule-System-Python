@@ -3,21 +3,21 @@ import torch
 from torch.utils.ffi import create_extension
 
 
-sources = ['src/overlap.c']
-headers = ['src/overlap.h']
+sources = ['client/overlap.c']
+headers = ['client/overlap.h']
 defines = []
 with_cuda = False
 
 if torch.cuda.is_available():
     print('Including CUDA code.')
-    sources += ['src/overlap_cuda.c']
-    headers += ['src/overlap_cuda.h']
+    sources += ['client/overlap_cuda.c']
+    headers += ['client/overlap_cuda.h']
     defines += [('WITH_CUDA', None)]
     with_cuda = True
 
 this_file = os.path.dirname(os.path.realpath(__file__))
 print(this_file)
-extra_objects = ['src/overlap_kernel.cu.o']
+extra_objects = ['client/overlap_kernel.cu.o']
 extra_objects = [os.path.join(this_file, fname) for fname in extra_objects]
 
 ffi = create_extension(
