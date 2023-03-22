@@ -1,5 +1,5 @@
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
+from PyQt5.QtWidgets import QLabel
+from PyQt5.QtGui import QMouseEvent, QImage, QPixmap, QPainter, QPen, QFont
 from PyQt5 import QtCore
 from PyQt5.QtCore import *
 import numpy as np
@@ -73,7 +73,30 @@ class QPaintLabel3(QLabel):
         if window == 1:
             self.setScaledContents(True)
             backlash = self.lineWidth() * 2
-            self.setPixmap(QPixmap.fromImage(img).scaled(w - backlash, h - backlash, Qt.IgnoreAspectRatio))
+
+            pixmap = QPixmap.fromImage(img)
+            if self.zoom == False:
+                painter = QPainter(pixmap)
+                loc = QFont()
+                loc.setPixelSize(3)
+                loc.setPointSize(9)
+                pen = QPen(Qt.green)
+                pen.setWidth(2)
+
+                painter.setPen(pen)
+                line_length = 100
+                scalebar_height = 20
+                scalebar_pos_x = pixmap.width() - line_length - 30
+                scalebar_pos_y = pixmap.height() - scalebar_height - 10
+                painter.drawLine(scalebar_pos_x, scalebar_pos_y, scalebar_pos_x + line_length, scalebar_pos_y)
+                painter.drawLine(scalebar_pos_x, scalebar_pos_y-5, scalebar_pos_x, scalebar_pos_y+5)
+                painter.drawLine(scalebar_pos_x + line_length, scalebar_pos_y-5, scalebar_pos_x + line_length, scalebar_pos_y+5)
+                painter.setFont(loc)
+                painter.drawText(scalebar_pos_x + max((line_length/2)-10,0), scalebar_pos_y - 10, "10cm")
+                painter.end()
+
+            # self.setPixmap(pixmap.scaled(w - backlash, h - backlash, Qt.IgnoreAspectRatio))
+            self.setPixmap(pixmap.scaled(w - backlash, h - backlash, Qt.IgnoreAspectRatio))
             self.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
             self.update()
 
@@ -81,19 +104,18 @@ class QPaintLabel3(QLabel):
         super().paintEvent(event)
         # 利用一個QFont來設定drawText的格式
         loc = QFont()
-        loc.setPixelSize(10)
-        loc.setBold(True)
-        loc.setItalic(True)
-        loc.setPointSize(15)
+        loc.setPixelSize(3)
+        loc.setPointSize(10)
         if self.pixmap() and self.type != 'full':
             painter = QPainter(self)
             pixmap = self.pixmap()
             painter.drawPixmap(self.rect(), pixmap)
 
-            painter.setPen(QPen(Qt.magenta, 8))
+            painter.setPen(QPen(Qt.green, 3))
             painter.setFont(loc)
-            painter.drawText(5, self.height() - 5, 'x=%3d,y=%3d,z=%3d'
-                             % (self.slice_loc[0]+1, self.slice_loc[1]+1, self.slice_loc[2]+1))
+            if self.type == 'axial':
+                painter.drawText(5, self.height() - 5, 'x=%d,y=%d,z=%d'
+                                 % (self.slice_loc[0]+1, self.slice_loc[1]+1, self.slice_loc[2]+1))
             style = Qt.DotLine
             width = 2
             if self.type == 'axial' and self.show_cross:

@@ -16,7 +16,7 @@ class ReportInfoUI(QDialog):
         super(ReportInfoUI, self).__init__(parent)
 
         self.setupUi(self)
-        self.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5(qt_api='pyqt5'))
+        self.setStyleSheet(qdarkstyle.load_stylesheet(qt_api='pyqt5'))
 
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")

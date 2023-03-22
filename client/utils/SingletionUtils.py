@@ -32,7 +32,7 @@ class UrlConstants:
         self.PATIENT_URL = self.PREFIX + "/patient"
 
 
-        self.ALL_PATIENT_URL = self.PREFIX + "/patient/getAllPatient"
+        self.PATIENT_GET_PAGE_URL = self.PREFIX + "/patient/getPageWithSearch"
 
         self.SCAN_GET_BY_PatientID_URL = self.PREFIX + "/scan/getByPatientId"
 

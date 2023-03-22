@@ -5,6 +5,7 @@ import numpy as np
 from PyQt5.QtCore import QThread, pyqtSignal
 from requests import Response
 
+from pdfReport.genPdf import genPDF
 from utils.SingletionUtils import Session
 import SimpleITK as sitk
 
@@ -114,6 +115,28 @@ class CompressFileThread(WorkThread):
 
             self.finishSignal.emit(False,None)
 
+class ReportThread(WorkThread):
+    finishSignal = pyqtSignal(bool,str)
+
+    def __init__(self,pdf_config,file_name,time_str=None,patient_info=None,nodule_info=None,nodule_imgs=None,appearance=None,diagnosis=None):
+        super(ReportThread, self).__init__()
+        self.pdf_config = pdf_config
+        self.file_name = file_name
+        self.time_str = time_str
+        self.patient_info = patient_info
+        self.nodule_info = nodule_info
+        self.nodule_imgs = nodule_imgs
+        self.appearance = appearance
+        self.diagnosis = diagnosis
+
+    def run(self):
+        try:
+            genPDF(self.pdf_config,self.file_name,self.time_str,self.patient_info,self.nodule_info,self.nodule_imgs,self.appearance,self.diagnosis)
+            self.finishSignal.emit(True,"")
+
+        except Exception as e:
+
+            self.finishSignal.emit(False,str(e))
 
 
 

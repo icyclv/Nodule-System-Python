@@ -1,6 +1,8 @@
 import io
+import math
 
 import numpy as np
+from PyQt5.QtGui import QIntValidator
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import pyqtSlot, Qt
 from datetime import datetime
@@ -8,7 +10,7 @@ from dateutil.relativedelta import relativedelta
 import sys
 
 from addPatientWindow import AddPatientWindow
-from src.addScanDialog import AddScanDialog
+from addScanDialog import AddScanDialog
 from ui.addPatientWindowUI import AddPatientWindowUI
 from ui.component.LoadingDialog import LoadingDialog
 from ui.CadWindowUI import CadWindowUI
@@ -44,7 +46,51 @@ class NoduleCADx(CadWindowUI):
 
         self.treeWidget.itemDoubleClicked.connect(self.changePatientInfo)
         # self.refresh_patient_list()
-        self.get_patient_data_pre()
+        self.current_search = ""
+
+        self.pageInfo = {
+            "current": 1,
+            "total": 0,
+            "size": 10
+        }
+
+        self.currentPageEdit.setText("1")
+
+
+        self.get_patient_data_pre(1, self.current_search)
+        self.prePageButton.clicked.connect(self.prePage)
+        self.nextPageButton.clicked.connect(self.nextPage)
+        # 按回车键跳转到指定页
+        self.currentPageEdit.returnPressed.connect(self.jumpPage)
+        self.searchButton.clicked.connect(self.search)
+        self.searchEdit.returnPressed.connect(self.search)
+
+
+
+    def prePage(self):
+        if self.pageInfo["current"] == 1:
+            return
+        self.get_patient_data_pre(self.pageInfo["current"]-1, self.current_search)
+
+
+    def nextPage(self):
+        if self.pageInfo["current"] == self.pageInfo["total"]:
+            return
+        self.get_patient_data_pre(self.pageInfo["current"]+1, self.current_search)
+
+
+    def jumpPage(self):
+        page = int(self.currentPageEdit.text())
+        if page < 1:
+            page = 1
+        if page > math.ceil(self.pageInfo["total"] / self.pageInfo["size"]):
+            page =  math.ceil(self.pageInfo["total"] / self.pageInfo["size"])
+        self.get_patient_data_pre(page, self.current_search)
+
+    def search(self):
+        self.current_search = self.searchEdit.text()
+        self.get_patient_data_pre(1, self.current_search)
+
 
 
     def treeWidgetItem_fun(self, pos):
@@ -123,7 +169,7 @@ class NoduleCADx(CadWindowUI):
             res = response.content.decode("utf-8")
             res = json.loads(res)
             if res['success'] == True:
-                self.get_patient_data_pre()
+                self.get_patient_data_pre(self.pageInfo["current"], self.current_search)
             else:
                 if "errorMsg" in res:
                     QtWidgets.QMessageBox.information(self, "删除", res['errorMsg'])
@@ -146,8 +192,9 @@ class NoduleCADx(CadWindowUI):
 
 
 
-    def get_patient_data_pre(self):
-        url = urlConstants.ALL_PATIENT_URL
+    def get_patient_data_pre(self,page=1,search=""):
+
+        url = urlConstants.PATIENT_GET_PAGE_URL+"?page="+str(page)+"&search="+search
 
         self.request_thread = RequestThread("get", url)
         self.request_thread.finishSignal.connect(self.get_patient_data_post)
@@ -158,7 +205,13 @@ class NoduleCADx(CadWindowUI):
             res = response.content.decode("utf-8")
             res = json.loads(res)
             if res['success'] == True:
-               self.patient_data = res['data']
+               self.patient_data = res['data']['data']
+               self.pageInfo = {
+                     "total": res['data']['total'],
+                     "size": res['data']['size'],
+                     "current": res['data']['current'],
+               }
+               self.update_page_info()
                self.refresh_patient_list()
             else:
                 message = res['message'] if "message" in res else "请求失败"
@@ -167,6 +220,22 @@ class NoduleCADx(CadWindowUI):
             message = "请求失败"
             QMessageBox.warning(self, "提示", message, QMessageBox.Yes)
 
+
+
+    def update_page_info(self):
+        self.currentPageEdit.setText(str(self.pageInfo["current"]))
+
+        self.currentPageEdit.setValidator(QIntValidator(1,  math.ceil(self.pageInfo["total"] / self.pageInfo["size"])))
+        self.totalPageLabel.setText("第"+str(self.pageInfo["current"])+"页/共"+str(self.pageInfo["total"])+"条")
+        if self.pageInfo["current"] == 1:
+            self.prePageButton.setEnabled(False)
+        else:
+            self.prePageButton.setEnabled(True)
+        #根据当前页、每页size和总条数数判断是否可以点击下一页
+        if self.pageInfo["current"] * self.pageInfo["size"] >= self.pageInfo["total"]:
+            self.nextPageButton.setEnabled(False)
+        else:
+            self.nextPageButton.setEnabled(True)
 
     def get_scan_data_pre(self,id):
         url = urlConstants.SCAN_GET_BY_PatientID_URL
@@ -187,13 +256,13 @@ class NoduleCADx(CadWindowUI):
                 message = res['message'] if "message" in res else "请求失败"
                 QMessageBox.warning(self, "提示", message, QMessageBox.Yes)
         else:
-            message = "请求失败"
-            QMessageBox.warning(self, "提示", message, QMessageBox.Yes)
+            message = "请求失败;"
+            QMessageBox.information(self, "提示", "提交失败;状态码：" + str(response.status_code))
 
     @pyqtSlot()
     def on_addUserButton_clicked(self):
         self.addPatientWindow = AddPatientWindow()
-        self.addPatientWindow.finishSignal.connect(self.get_patient_data_pre)
+        self.addPatientWindow.finishSignal.connect(partial(self.get_patient_data_pre,self.pageInfo["current"], self.current_search))
         self.addPatientWindow.show()
 
 
@@ -233,7 +302,7 @@ class NoduleCADx(CadWindowUI):
     def changePatientInfo(self):
         index_member = self.treeWidget.currentIndex().row()
         self.addPatientWindow = AddPatientWindow(self.patient_data[index_member]['id'])
-        self.addPatientWindow.finishSignal.connect(self.get_patient_data_pre)
+        self.addPatientWindow.finishSignal.connect(partial(self.get_patient_data_pre,self.pageInfo["current"], self.current_search))
         self.addPatientWindow.show()
 
 
@@ -264,9 +333,7 @@ class NoduleCADx(CadWindowUI):
 
 
 
-        self.display_dialog = DisplayDialog()
-        self.display_dialog.setStyleSheet(qdarkstyle.load_stylesheet(qt_api='pyqt5'))
-        self.display_dialog.finishSignal.connect(partial(self.get_scan_data_pre,self.patient_data[self.treeWidget.currentIndex().row()]['id']))
+
         self.loading_dialog = LoadingDialog(self,"下载影像中...")
         self.loading_dialog.show()
         self.request_thread = RequestThread("get", urlConstants.SCAN_INFO_WITH_URL_URL + "?id=" + str(id))
@@ -308,6 +375,10 @@ class NoduleCADx(CadWindowUI):
 
 
             self.loading_dialog.close()
+            self.display_dialog = DisplayDialog()
+            self.display_dialog.setStyleSheet(qdarkstyle.load_stylesheet(qt_api='pyqt5'))
+            self.display_dialog.finishSignal.connect(
+                partial(self.get_scan_data_pre, self.patient_data[self.treeWidget.currentIndex().row()]['id']))
             self.display_dialog.w = self.display_dialog.imgLabel_1.width()
             self.display_dialog.h = self.display_dialog.imgLabel_1.height()
 

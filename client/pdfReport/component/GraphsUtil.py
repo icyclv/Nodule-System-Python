@@ -44,14 +44,14 @@ class GraphsUtil:
 
     # 绘制小标题
     @staticmethod
-    def draw_little_title(title: str):
+    def draw_little_title(title: str,fontSzie=12):
         # 获取所有样式表
         style = getSampleStyleSheet()
         # 拿到标题样式
         ct = style['Normal']
         # 单独设置样式相关属性
         ct.fontName = 'SimSun'  # 字体名
-        ct.fontSize = 12  # 字体大小
+        ct.fontSize = fontSzie  # 字体大小
         ct.leading = 15  # 行间距
         ct.bold = True
         ct.textColor = colors.black  # 字体颜色
@@ -120,7 +120,7 @@ class GraphsUtil:
 
     # 绘制图片
     @staticmethod
-    def draw_img(file=None, width=4 * cm):
+    def draw_img(file=None, height=4 * cm):
         if isinstance(file, np.ndarray):
             img = PIL.Image.fromarray(file)
         else:
@@ -131,7 +131,6 @@ class GraphsUtil:
         buf.seek(0)
 
         img = Image(buf)  # 读取指定路径下的图片
-        img.drawWidth = width  # 设置图片的宽度
-        img.drawHeight = (size[1] / size[0] * 4) * cm  # 设置图片的高度
-        # img.hAlign = hAlign
+        img.drawWidth = (size[0] / size[1] * height)  # 设置图片的宽度
+        img.drawHeight = height # 设置图片的高度
         return img

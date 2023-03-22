@@ -14,12 +14,14 @@ from pyqtgraph.opengl import MeshData, GLAxisItem
 from pyqtgraph.opengl.items.GLMeshItem import GLMeshItem
 from skimage import measure
 
+from ReportDialog import ReportDialog
 from ui.ArchiveWeightUI import ArchiveWeightUI
 from ui.DisplayDialogUI import DisplayDialogUI
 from ui.component.LoadingDialog import LoadingDialog
 from ui.component.ReconstructionViewer import QGlyphViewer
 from utils.MyThread import CompressFileThread, RequestThread
 from utils.SingletionUtils import urlConstants, GlobalDict
+from utils.util import get_type_name
 
 
 class DisplayDialog(DisplayDialogUI):
@@ -68,6 +70,8 @@ class DisplayDialog(DisplayDialogUI):
         self.vtk_layout.addWidget(self.vtkFrame)
         self.reconstructionFrame.setLayout(self.vtk_layout)
         self.confirmButton.clicked.connect(self.save_change)
+        self.reportButton.clicked.connect(self.report)
+
 
         self.axialButton.setStyleSheet('QPushButton {min-width: 10px;  min-height: 10px;}')
         self.sagittalButton.setStyleSheet('QPushButton {min-width: 10px;  min-height: 10px;}')
@@ -203,7 +207,7 @@ class DisplayDialog(DisplayDialogUI):
         for i, (d, b, p) in enumerate(zip(self.nodules_data, self.crop_boxes, self.mask_probs)):
             w = ArchiveWeightUI(d["id"])
 
-            # TODO 到底xyz还是zyx... 要搞清楚
+            #  xyz还是zyx...
             z, y, x = d["coordinate"].split(',')
             w.tableWidget.setItem(0, 0, QTableWidgetItem(f"{x}, {y}, {z}"))
             w.tableWidget.setItem(1, 0, QTableWidgetItem(str(d['confidence'])))
@@ -518,13 +522,15 @@ class DisplayDialog(DisplayDialogUI):
 
     def save_change(self):
         # TODO (1)從現有archive把資料存起來，之後要回傳給main修改scan內容的 (2)更新self.crop_boxes, self.mask_probs，離開此畫面時要重存npy
-        # 這邊要做的事類似'detect' function
-        print(11)
-        for i in range(self.v.count()):
-            if i in self.delete_index:
-                self.nodules_data[i]["isDeleted"] = True
-                continue
-            w = self.v.itemAt(i).widget()
+        for i in self.delete_index:
+            self.nodules_data[i]["deleted"] = True
+
+        for t in range(self.v.count()):
+
+            w = self.v.itemAt(t).widget()
+            i = w.imgLabel.index
+
+
             x, y, z = [s.strip() for s in w.tableWidget.item(0, 0).text().split(',')]
 
             self.nodules_data[i]["coordinate"] = f"{z},{y},{x}"
@@ -548,7 +554,7 @@ class DisplayDialog(DisplayDialogUI):
 
             crop_boxes = np.delete(self.crop_boxes, self.delete_index, axis=0)
             mask_probs = np.delete(self.mask_probs, self.delete_index, axis=0)
-            self.delete_un_save = False
+
             self.loadingDialog = LoadingDialog(self, "压缩中...")
             self.loadingDialog.show()
             self.compress_changed_files(crop_boxes, mask_probs)
@@ -573,7 +579,7 @@ class DisplayDialog(DisplayDialogUI):
             return
 
         self.loadingDialog.label.setText("上传中...")
-        self.nodules_data = self.nodules_data[:2]
+        self.nodules_data = self.nodules_data
         self.scan_data["noduleList"] = self.nodules_data
         self.scan_data["appearance"] = self.appearanceTextEdit.toPlainText()
         self.scan_data["diagnosis"] = self.diagnosisTextEdit.toPlainText()
@@ -601,8 +607,8 @@ class DisplayDialog(DisplayDialogUI):
             res = json.loads(res)
             if res['success'] == True:
                 QtWidgets.QMessageBox.information(self, "提示", "提交成功")
+                self.delete_un_save = False
                 self.finishSignal.emit(1)
-                self.close()
             else:
                 if "errorMsg" in res:
                     QtWidgets.QMessageBox.information(self, "提示", res['errorMsg'])
@@ -611,20 +617,36 @@ class DisplayDialog(DisplayDialogUI):
             QtWidgets.QMessageBox.information(self, "提示", "提交失败;状态码：" + str(response.status_code))
 
     def get_img_list(self):
-        self.img_list = []
+        img_list = []
         for nodule in self.nodules_data:
-            if nodule["isDeleted"] == True:
+            if nodule["deleted"] == True:
                 continue
             else:
                 z, y, x = nodule["coordinate"].split(',')
                 z, y, x = int(z), int(y), int(x)
-                self.img_list.append(self.get_three_img(z, y, x))
+                img_list.append(self.get_three_img(z, y, x))
+        return img_list
 
 
 
 
-    def report_pre(self):
+    def report(self):
         report_config = GlobalDict.get("pdfReport").copy()
+        nodule_list = [["序号","坐标", "直径(mm)", "置信度", "类型", "恶性概率"]]
+        for i, nodule in enumerate(self.nodules_data):
+            if nodule["deleted"] == True:
+                continue
+            else:
+                z, y, x = nodule["coordinate"].split(',')
+                nodule_list.append([i+1,'{},{},{}'.format(x,y,z) , str(nodule["diameter"]), str(nodule["confidence"]), str(get_type_name(nodule["type"])), str(nodule["classificationProbability"])])
+        nodule_imgs = self.get_img_list()
+        appearance, diagnosis = self.appearanceTextEdit.toPlainText(), self.diagnosisTextEdit.toPlainText()
+
+        self.reportDialog = ReportDialog(report_config,self.patient_data,self.scan_data, nodule_list, nodule_imgs, appearance, diagnosis, self)
+        self.reportDialog.show()
+
+
+
 
 
 

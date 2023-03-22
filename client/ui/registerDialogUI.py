@@ -448,8 +448,8 @@ class Register_Dialog_UI(QDialog):
         self.departmentEdit.setPlaceholderText(_translate("Dialog", "机构"))
         self.label_17.setText(_translate("Dialog", "姓名"))
         self.nameEdit.setPlaceholderText(_translate("Dialog", "姓名"))
-        self.label_18.setText(_translate("Dialog", "职称"))
-        self.positionEdit.setPlaceholderText(_translate("Dialog", "职称"))
+        self.label_18.setText(_translate("Dialog", "职位"))
+        self.positionEdit.setPlaceholderText(_translate("Dialog", "职位"))
         self.registerButton.setText(_translate("Dialog", "注册"))
 
 if __name__ == "__main__":
