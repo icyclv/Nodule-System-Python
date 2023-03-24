@@ -26,7 +26,7 @@ from functools import partial
 from utils.SingletionUtils import urlConstants
 
 
-class NoduleCADx(CadWindowUI):
+class CadWindow(CadWindowUI):
 
     def __init__(self):
         super().__init__()
@@ -64,7 +64,7 @@ class NoduleCADx(CadWindowUI):
         self.currentPageEdit.returnPressed.connect(self.jumpPage)
         self.searchButton.clicked.connect(self.search)
         self.searchEdit.returnPressed.connect(self.search)
-
+        self.noduletreeWidget.itemDoubleClicked.connect(self.on_displayButton_clicked)
 
 
     def prePage(self):
@@ -112,13 +112,16 @@ class NoduleCADx(CadWindowUI):
         item = self.noduletreeWidget.currentItem()
         if item is not None :
             menu = QMenu()
-            item2 = menu.addAction(u"查看影像")
-            item1 = menu.addAction(u"删除影像")
+            item1 = menu.addAction(u"查看影像")
+            item2 = menu.addAction(u"删除影像")
+
             action = menu.exec_(self.noduletreeWidget.mapToGlobal(pos))
             if action == item1:
                 self.on_displayButton_clicked()
             elif action == item2:
                 self.delete_scan()
+
+
 
     def delete_scan(self):
         # 提问是否删除
@@ -262,7 +265,7 @@ class NoduleCADx(CadWindowUI):
     @pyqtSlot()
     def on_addUserButton_clicked(self):
         self.addPatientWindow = AddPatientWindow()
-        self.addPatientWindow.finishSignal.connect(partial(self.get_patient_data_pre,self.pageInfo["current"], self.current_search))
+        self.addPatientWindow.finishSignal.connect(partial(self.get_patient_data_pre,page=self.pageInfo["current"],search=self.current_search))
         self.addPatientWindow.show()
 
 
@@ -416,6 +419,6 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     app.setStyleSheet(qdarkstyle.load_stylesheet(qt_api='pyqt5'))
 
-    window = NoduleCADx()
+    window = CadWindow()
     window.show()
     sys.exit(app.exec_())

@@ -22,7 +22,7 @@ class ArchiveWeightUI(QWidget):
 
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(357, 102)
+        Form.resize(301, 102)
         Form.setMinimumSize(QtCore.QSize(0, 102))
         Form.setMaximumSize(QtCore.QSize(90000, 102))
         self.gridLayout = QtWidgets.QGridLayout(Form)

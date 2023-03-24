@@ -70,24 +70,31 @@ lung_segment_models = {
 }
 
 
-def load_model(seg_model, detect_model, classification_model, lung_model):
+def load_model(seg_model_cfg, detect_model_cfg, classification_model_cfg, lung_model_cfg):
     """
     加载模型,返回分割模型，检测模型，分类模型，肺部分割模型
     """
     # 分割模型
-    seg_model = {"model": segment_models["nodulenet"]["model"](),
-                 "interface_method": segment_models["nodulenet"]["interface_method"]}
+    seg_model, detect_model, classification_model, lung_model = None, None, None, None
+    if seg_model_cfg is not None:
+
+        seg_model = {"model": segment_models[seg_model_cfg]["model"](),
+                     "interface_method": segment_models[seg_model_cfg]["interface_method"]}
 
     # 检测模型，性能一般，直接用NoduleNet的检测结果
-    detect_model = None
+    if detect_model_cfg is not None:
+        detect_model = {"model": detect_models[detect_model_cfg]["model"](),
+                        "interface_method": detect_models[detect_model_cfg]["interface_method"]}
     # detect_model=detect_models["sanet"]["model"]()
 
     # 分类模型
-    classification_model = {"model": classification_models["nasnet"]["model"](),
-                            "interface_method": classification_models["nasnet"]["interface_method"]}
+    if classification_model_cfg is not None:
+           classification_model = {"model": classification_models[classification_model_cfg]["model"](),
+                                    "interface_method": classification_models[classification_model_cfg]["interface_method"]}
 
     # 肺部分割模型
-    lung_model = {"model": lung_segment_models["lungmask"]["model"](),
-                  "interface_method": lung_segment_models["lungmask"]["interface_method"]}
+    if lung_model_cfg is not None:
+        lung_model = {"model": lung_segment_models[lung_model_cfg]["model"](),
+                      "interface_method": lung_segment_models[lung_model_cfg]["interface_method"]}
 
     return seg_model, detect_model, classification_model, lung_model

@@ -17,7 +17,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from ui.loginWindowUI import Login_Window_UI
 from utils.MyThread import RequestThread
 from css.Login_css import StyleLineEditError, StyleLineEditOk, StylePopupError, StylePopupOk
-from main import NoduleCADx
+from CadWindow import CadWindow
 from registerDialog import Register_Dialog
 from utils.SingletionUtils import urlConstants,GlobalDict
 from utils.Validitor import FormValidator
@@ -49,6 +49,11 @@ class Login_Window(Login_Window_UI):
         self.pushButton_login.clicked.connect(self.checkFields)
 
         self.pushButton_register.clicked.connect(self.on_RegisterButton_clicked)
+
+
+        # 按下回车键登录
+        self.userEdit.returnPressed.connect(self.checkFields)
+        self.passwordEdit.returnPressed.connect(self.checkFields)
 
 
     def checkFields(self):
@@ -101,7 +106,7 @@ class Login_Window(Login_Window_UI):
                 self.label_error.setText("登录成功")
                 self.frame_error.setStyleSheet(StylePopupOk)
 
-                self.mainwindow = NoduleCADx()
+                self.mainwindow = CadWindow()
                 self.mainwindow.setStyleSheet(qdarkstyle.load_stylesheet(qt_api='pyqt5'))
                 self.mainwindow.show()
                 self.close()

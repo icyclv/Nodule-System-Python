@@ -1,25 +1,24 @@
 
 ## Model configuration
-model_config = {
-                "seg_model" :"nodulenet",
-                "detect_model" : None,
-                "classification_model" : "nasnet",
-                "lung_model" : "lungmask"
-                }
+
+import os
+
+import yaml
+
+def get_yaml_config():
+    path = os.path.join(os.getcwd(), 'config.yaml')
+    f = open(path, encoding='utf-8')
+    file = yaml.safe_load(f)
+    rabbitmq_config = file['rabbitmq_config']
+    model_config = file['model_config']
+    minio_config = file['minio_config']
+    ORIGIN_SUFFIX = file['ORIGIN_SUFFIX']
+    RESULT_SUFFIX = file['RESULT_SUFFIX']
+    return model_config, rabbitmq_config, minio_config, ORIGIN_SUFFIX, RESULT_SUFFIX
 
 
-#service configuration
-rabbitmq_config = {"host": "192.168.159.188",
-                     "port": 5672,
-                     "username": "admin",
-                     "password": "123"}
 
-minio_config = {
-    "endpoint": "192.168.159.188:9000",
-    "accessKey": "root",
-    "secretKey": "chang2001",
-    "bucketName": "medical-images"
-}
 
-ORIGIN_SUFFIX = "_origin.npz"
-RESULT_SUFFIX = "_result.npz"
+
+
+model_config,rabbitmq_config, minio_config, ORIGIN_SUFFIX, RESULT_SUFFIX = get_yaml_config()

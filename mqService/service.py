@@ -14,8 +14,8 @@ import requests
 from minio import Minio
 
 from config import rabbitmq_config, model_config, minio_config, ORIGIN_SUFFIX, RESULT_SUFFIX
-import logging
 
+from mqService.utils.logUtil import logger
 from net.ModelConstant import load_model
 from utils.detect import detect
 
@@ -24,7 +24,7 @@ def process(name):
     url = minio_client.presigned_get_object(minio_config["bucketName"], name, expires=timedelta(minutes=10))
     req = requests.get(url)
 
-    file = np.load(io.BytesIO(req.content))
+    file = np.load(io.BytesIO(req.content), allow_pickle=True)
     img, spacing = file['img'], file['spacing']
     return img, spacing
 
@@ -44,7 +44,7 @@ def inference(scan_id,name):
 
 def callback(ch, method, properties, body):
     body = json.loads(body)
-    logging.info(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + " [x] Received %r" % body)
+    logger.info(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + " [x] Received %r" % body)
 
     scan_id = body["scanId"]
     name = body["fileName"]
@@ -61,7 +61,7 @@ def callback(ch, method, properties, body):
 
         channel.basic_publish(exchange='NoduleExchange', routing_key='NoduleResult', body= json.dumps(res))
         ch.basic_ack(delivery_tag=method.delivery_tag)
-        logging.info(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + " [x] Done %r" % body)
+        logger.info(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + " [x] Done %r" % body)
     except Exception as e:
         res = {
             "success": False,
@@ -69,17 +69,17 @@ def callback(ch, method, properties, body):
         }
         channel.basic_publish(exchange='NoduleExchange', routing_key='NoduleResult', body=json.dumps(res))
 
-        logging.error(e)
+        logger.error(e)
         # 报告错误，并且重新放回队列，
 
 
-        # channel.basic_nack(delivery_tag=method.delivery_tag, requeue=True) // 可能是显存不足，这种情况可以放回队列让其他服务器处理
+        channel.basic_nack(delivery_tag=method.delivery_tag, requeue=True) #s 可能是显存不足，这种情况可以放回队列让其他服务器处理
 
 
 if __name__ == "__main__":
     # 连接rabbitmq
     connection = pika.BlockingConnection(
-    pika.ConnectionParameters(rabbitmq_config["host"], port=rabbitmq_config["port"],
+    pika.ConnectionParameters(rabbitmq_config["host"], port=int(rabbitmq_config["port"]),
                               credentials=pika.PlainCredentials(rabbitmq_config["username"], rabbitmq_config["password"])))
     channel = connection.channel()
     channel.exchange_declare("NoduleExchange", "direct", durable=True)
@@ -100,11 +100,13 @@ if __name__ == "__main__":
         secure=False
     )
     # 设置日志，文件名为当前时间
-    logging.basicConfig(filename=os.path.join("./logs",time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) + ".log") , level=logging.INFO)
+    #
+
+
 
 
     channel.basic_qos(prefetch_count=1)
     channel.basic_consume(queue='NoduleInferenceQueue', auto_ack=False, on_message_callback=callback)
 
-    logging.info(' [*] Waiting for messages. To exit press CTRL+C')
+    logger.info(' [*] Waiting for messages. To exit press CTRL+C')
     channel.start_consuming()

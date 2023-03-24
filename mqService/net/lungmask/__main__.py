@@ -1,12 +1,13 @@
 import sys
 import argparse
-import logging
 from lungmask import mask
 from lungmask import utils
 import os
 import SimpleITK as sitk
 import pkg_resources
 import numpy as np
+
+from mqService.utils.logUtil import logger
 
 
 def path(string):
@@ -39,10 +40,10 @@ def main():
     if args.cpu:
         batchsize = 1
 
-    logging.info(f'Load model')
+    logger.info(f'Load model')
     
     input_image = utils.get_input_image(args.input)
-    logging.info(f'Infer lungmask')
+    logger.info(f'Infer lungmask')
     if args.modelname == 'LTRCLobes_R231':
         assert args.modelpath is None, "Modelpath can not be specified for LTRCLobes_R231 mode"
         result = mask.apply_fused(input_image, force_cpu=args.cpu, batch_size=batchsize, volume_postprocessing=not(args.nopostprocess), noHU=args.noHU)
@@ -59,7 +60,7 @@ def main():
              
     result_out= sitk.GetImageFromArray(result)
     result_out.CopyInformation(input_image)
-    logging.info(f'Save result to: {args.output}')
+    logger.info(f'Save result to: {args.output}')
     sys.exit(sitk.WriteImage(result_out, args.output))
 
 
