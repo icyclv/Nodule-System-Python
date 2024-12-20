@@ -16,4 +16,23 @@
 
 放置在mqService/model文件夹中
 
+三维重建
+![3d](static/3d.png)
 
+报告导出
+![export](static/export.png)
+![report](static/report.jpg)
+
+信息管理
+![info](static/info.png)
+
+
+## 后端：
+https://github.com/icyclv/NoduleSystem-Backend
+
+
+## 架构
+PyQT客户端 ->http-> SpringBoot服务端 ->mq-> Pytorch推理端
+
+## 参考项目：
+- Nodule-CADx ： https://github.com/wenyalintw/Nodule-CADx
